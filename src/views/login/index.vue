@@ -44,15 +44,12 @@ import { useStore } from '@/store';
 export default defineComponent({
   name: 'loginView',
   setup() {
-    // --- 属性 ---
     const store = useStore();
     const formState = reactive({
       username: '',
       password: ''
     });
-    // --- 方法 ---
     const onFinish = (values: any) => {
-      console.log('values', values);
       store.dispatch('user/loginAction', values);
     };
     return {

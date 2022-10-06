@@ -1,7 +1,7 @@
 export interface ILoginResult {
-  nickname: string;
+  id: string | number;
+  username: string;
   token: string;
-  userInfo: object;
 }
 export interface IAccount {
   username: string;

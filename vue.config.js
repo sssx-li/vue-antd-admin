@@ -45,6 +45,16 @@ module.exports = defineConfig({
           )
         }
       })
-    ]
+    ],
+    devServer: {
+      proxy: {
+        '/baseUrl': {
+          target: 'http://localhost:8080',
+          pathRewrite: {
+            '^/baseUrl': ''
+          }
+        }
+      }
+    }
   }
 });

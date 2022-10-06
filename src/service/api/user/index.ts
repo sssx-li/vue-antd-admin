@@ -1,4 +1,4 @@
-import Reqiest from '@/service';
+import Request from '@/service';
 
 import { IAccount, ILoginResult } from './types';
 import { IDataModel } from '../types';
@@ -8,7 +8,7 @@ import { tokenKey } from '@/common';
 
 // 登录
 export function login(data: IAccount) {
-  return Reqiest.request<IDataModel<ILoginResult>>({
+  return Request.request<IDataModel<ILoginResult>>({
     url: User.LOGIN,
     method: 'POST',
     data,
@@ -27,8 +27,15 @@ export function login(data: IAccount) {
   });
 }
 
+// 获取用户信息
+export function getUserInfo() {
+  return Request.get({
+    url: User.USER
+  });
+}
+
 export function getUserMenu() {
-  return Reqiest.get<IDataModel>({
+  return Request.get({
     url: User.USEMENU
   });
 }

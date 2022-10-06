@@ -7,30 +7,34 @@
         </template>
       </a-button>
       <span class="avatar" @click="showUserInfo">
-        <a-avatar :src="userInfo.avatar">
+        <a-avatar
+          :src="
+            userInfo.avatar ||
+            'http://minio-test.epshealth.com:7070/uurm/_public/userPic/1'
+          "
+        >
           <template #icon><UserOutlined /></template>
         </a-avatar>
-        <span class="user-name">{{ userInfo.nickname }}</span>
+        <span class="user-name">{{ userInfo.username }}</span>
       </span>
     </a-space>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { computed, defineComponent } from 'vue';
 import localCache from '@/utils/catch';
 import { useMessage } from '@/hooks/useMessage';
 import { useModalConfirm } from '@/hooks/useModalConfirm';
+import { useStore } from '@/store';
 
 export default defineComponent({
   name: 'infoComp',
   setup() {
+    const store = useStore();
     const message = useMessage();
     const confirm = useModalConfirm();
-    const userInfo = reactive({
-      nickname: '超级管理员',
-      avatar: 'http://minio-test.epshealth.com:7070/uurm/_public/userPic/1'
-    });
+    const userInfo = computed(() => store.state.user.userInfo);
     const logout = () => {
       confirm({ content: '确定要退出登录吗' })
         .then(() => {
@@ -54,7 +58,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .info-container {
-  min-width: 192px;
   :deep(.ant-space) {
     height: 48px;
     line-height: 48px;

@@ -1,4 +1,5 @@
 import { Module } from 'vuex';
+import { message } from 'ant-design-vue';
 
 import router from '@/router';
 import localCache from '@/utils/catch';
@@ -8,7 +9,6 @@ import { getUserInfo, login } from '@/service/api/user';
 import { tokenKey } from '@/common';
 import { IAccount } from '@/service/api/user/types';
 import { mapMenusToRoutes } from '@/utils/mapMenus';
-import { useMessage } from '@/hooks/useMessage';
 
 const userModel: Module<IUserState, IRootState> = {
   namespaced: true,
@@ -49,7 +49,6 @@ const userModel: Module<IUserState, IRootState> = {
         dispatch('getUserInfo');
         router.push('/');
       } catch (error) {
-        const message = useMessage();
         message.error('用户名或密码错误');
       }
     },

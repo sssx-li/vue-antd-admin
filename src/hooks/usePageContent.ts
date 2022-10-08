@@ -1,9 +1,8 @@
 import { ref, reactive, watch } from 'vue';
+import { message } from 'ant-design-vue';
+
 import Request from '@/service';
-
-import { useMessage } from './useMessage';
 import { useModalConfirm } from './useModalConfirm';
-
 import { IDataModel, ITableList } from '@/service/api/types';
 
 /**
@@ -12,7 +11,6 @@ import { IDataModel, ITableList } from '@/service/api/types';
  * @param curPageQuery 当前页面请求参数(除pageNo、pageSize)
  */
 const usePageContent = function (url: string, curPageQuery: any = {}) {
-  const message = useMessage();
   const confirm = useModalConfirm();
 
   const pageInfo = reactive({ pageNo: 1, pageSize: 10 });

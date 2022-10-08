@@ -19,7 +19,7 @@
           <a-button
             type="primary"
             size="small"
-            @click="handleClickEdit(scope.row)"
+            @click="emit('edit', scope.row)"
           >
             编辑
           </a-button>
@@ -27,7 +27,7 @@
             type="primary"
             danger
             size="small"
-            @click="handleDelete(scope.row.id)"
+            @click="emit('delete', scope.row)"
           >
             删除
           </a-button>
@@ -71,7 +71,7 @@ export default defineComponent({
       default: () => {}
     }
   },
-  emits: ['edit'],
+  emits: ['edit', 'delete'],
   setup(props, { emit, expose }) {
     const {
       pageInfo,
@@ -81,7 +81,8 @@ export default defineComponent({
       refresh,
       handleSizeChange,
       handleDelete,
-      handleEdit
+      handleEdit,
+      handleCreate
     } = usePageContent(props.contentTableConfig?.url, props.curPageQuery);
 
     // 获取其他的动态插槽名称
@@ -94,17 +95,13 @@ export default defineComponent({
       }
     );
 
-    // 操作
-    const handleClickEdit = (row: any) => {
-      emit('edit', row);
-    };
-
     getPageData();
 
     expose({
       getPageData,
       handleEdit,
-      refresh
+      refresh,
+      handleCreate
     });
 
     return {
@@ -112,12 +109,13 @@ export default defineComponent({
       total,
       otherPropSlots,
       pageInfo,
+      emit,
       getPageData,
       refresh,
       handleEdit,
       handleSizeChange,
       handleDelete,
-      handleClickEdit
+      handleCreate
     };
   }
 });

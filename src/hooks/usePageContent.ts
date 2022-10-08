@@ -52,8 +52,7 @@ const usePageContent = function (url: string, curPageQuery: any = {}) {
         data: params
       });
       message.success('添加成功');
-      pageInfo.pageNo = 1;
-      getPageData();
+      refresh();
     } catch (error) {
       message.error('添加失败, 请稍后再试');
     }
@@ -69,8 +68,7 @@ const usePageContent = function (url: string, curPageQuery: any = {}) {
         data: row
       });
       message.success('修改成功');
-      pageInfo.pageNo = 1;
-      getPageData();
+      refresh();
     } catch (error) {
       message.error('修改失败, 请稍后再试');
     }
@@ -81,7 +79,6 @@ const usePageContent = function (url: string, curPageQuery: any = {}) {
     Object.assign(pageInfo, page);
   };
 
-  // 删除
   // 删除
   const handleDelete = (id: string | number) => {
     confirm()

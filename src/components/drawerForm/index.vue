@@ -50,16 +50,10 @@ export default defineComponent({
     // 表单数据处理
     const formState = ref<any>({});
     const formCompRef = ref<InstanceType<typeof SyForm>>();
-    const formItems = props.formConfig.formItems as any[];
-    const formOriginData: any = {};
-    for (const item of formItems) {
-      formOriginData[item.field] = item.defaultValue || '';
-    }
     // 初始化表单数据
-    Object.assign(formState.value, { ...formOriginData, ...props.row });
+    Object.assign(formState.value, { ...props.row });
 
     const close = () => {
-      formState.value = formOriginData;
       emit('update:visible', false);
       emit('update:show', false);
     };

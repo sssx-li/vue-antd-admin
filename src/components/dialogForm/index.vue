@@ -91,7 +91,8 @@ export default defineComponent({
     };
 
     expose({
-      handleCloseDialog
+      handleCloseDialog,
+      loading
     });
 
     return {

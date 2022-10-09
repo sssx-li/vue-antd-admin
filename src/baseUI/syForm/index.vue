@@ -21,12 +21,16 @@
             v-model:value="formData[item.field]"
             :size="size"
             :placeholder="item.placeholder"
+            :disabled="item.disabled"
+            :readonly="item.readonly"
             @change="handleValueChange($event, item)"
           />
         </template>
         <template v-else-if="item.type === 'password'">
           <a-input-password
             :size="size"
+            :disabled="item.disabled"
+            :readonly="item.readonly"
             v-model:value="formData[item.field]"
             :placeholder="item.placeholder"
             @change="handleValueChange($event, item)"
@@ -36,6 +40,8 @@
           <a-textarea
             v-model:value="formData[item.field]"
             :size="size"
+            :disabled="item.disabled"
+            :readonly="item.readonly"
             :show-count="item.showCount"
             :maxlength="item.maxlength"
             @change="handleValueChange($event, item)"
@@ -45,6 +51,8 @@
           <a-select
             v-model:value="formData[item.field]"
             :size="size"
+            :disabled="item.disabled"
+            :readonly="item.readonly"
             :placeholder="item.placeholder"
             :options="item.options"
             @change="handleValueChange($event, item)"
@@ -55,6 +63,7 @@
           <a-switch
             v-model:checked="formData[item.field]"
             :size="size"
+            :disabled="item.disabled"
             @change="handleValueChange($event, item)"
           />
         </template>
@@ -126,14 +135,19 @@ export default defineComponent({
       }
     );
 
-    // 获取校验规则
+    // 获取校验规则及初始化赋值
     const rulesList = {};
     props.formItems.forEach((item) => {
       const { rules, field } = item;
+      const value = (formData.value as any)[field];
+      if (item.defaultValue !== undefined && !(value || value === 0)) {
+        (formData.value as any)[field] = item.defaultValue;
+      }
       if (rules && rules.length > 0) {
         (rulesList as any)[field] = rules;
       }
     });
+    emit('update:modelValue', formData.value);
     const { validate, validateInfos } = useFormValidate(
       formData,
       reactive({

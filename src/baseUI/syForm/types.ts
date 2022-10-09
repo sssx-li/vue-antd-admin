@@ -16,6 +16,8 @@ export interface IFormItem {
   defaultValue?: any; // 参数默认值
   options?: IOptions[]; // 选择框选项数据
   otherOptions?: any; // 针对特殊的属性
+  readonly?: boolean; // 是否只读
+  disabled?: boolean; // 是否禁用
 }
 
 export interface IForm {
